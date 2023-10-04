@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/text_view_dialog1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/connection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/_20ssp" />
+    <ImageView
+        android:id="@+id/image_view_dialog1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cancel_dialog"
+        app:layout_constraintStart_toEndOf="@id/text_view_dialog1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/_20ssp" />
+    <TextView
+        android:id="@+id/text_view_dialog2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#EF7349"
+        android:text="Oops"
+        android:textSize="30dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_dialog1"
+        android:fontFamily="@font/urbanist_500"
+        android:layout_marginTop="@dimen/_20ssp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/text_view_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#898989"
+        android:text="No Internet Connection"
+        android:textSize="19dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_dialog2"
+        android:fontFamily="@font/urbanist_500"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:textStyle="bold"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dialog_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:layout_marginTop="@dimen/_22ssp"
+        android:text="OK"
+        android:textSize="@dimen/_22sdp"
+        android:fontFamily="@font/urbanist_600"
+        android:textColor="@color/white"
+        app:cornerRadius="10dp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_dialog"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
