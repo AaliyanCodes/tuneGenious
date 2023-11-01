@@ -94,6 +94,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="0/500"
+                android:textColor="@color/black"
+                android:background="@drawable/text_counter"
+                android:id="@+id/wordCountTextView"
+                android:layout_marginTop="@dimen/_82sdp"
+                android:layout_marginEnd="@dimen/_3ssp"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
@@ -395,7 +408,6 @@
         app:layout_constraintEnd_toStartOf="@+id/textviewbutton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/buttonicon"
         android:layout_marginRight="5dp"
         />
     <TextView

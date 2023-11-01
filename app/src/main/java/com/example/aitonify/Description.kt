@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
@@ -23,11 +25,18 @@ import retrofit2.await
 
 class Description : AppCompatActivity(),OnClickListener {
 
+
+    override fun onBackPressed() {
+
+
+    }
     private lateinit var binding:ActivityDescriptionBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDescriptionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.imageviewbutton.setBackgroundResource(R.drawable.buttonicon)
+
 
 
 
@@ -43,9 +52,39 @@ class Description : AppCompatActivity(),OnClickListener {
         binding.consButton.setOnClickListener(this)
         binding.image1.setOnClickListener(this)
         binding.imageViewClear.setOnClickListener(this)
+        binding.editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                binding.imageviewbutton.setBackgroundResource(R.drawable.buttonicon)
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val text = s.toString()
+                val charCount = text.length
+                val maxCharCount = 5
+
+                if (charCount > maxCharCount) {
+                    val truncatedText = text.substring(0, maxCharCount)
+                    binding.editText.setText(truncatedText)
+                    binding.editText.setSelection(maxCharCount)
+                }
+                val displayText = "$charCount/$maxCharCount"
+                binding.wordCountTextView.text = displayText
+                Log.d("TextWatcher", "Text changed: $s")
+                if (s?.isNotEmpty() == true) {
+                    binding.imageviewbutton.setBackgroundResource(R.drawable.afterinput)
+                }
+                else{
+                    binding.imageviewbutton.setBackgroundResource(R.drawable.buttonicon)
+                }
+            }
+        })
+
+        }
 
 
-    }
+
 
     override fun onClick(v: View?) {
         when(v?.id)
@@ -237,7 +276,9 @@ class Description : AppCompatActivity(),OnClickListener {
                binding.editText.text.clear()
             }
 
+
         }
+
 
     }
     private fun isOnline(): Boolean {
@@ -248,6 +289,12 @@ class Description : AppCompatActivity(),OnClickListener {
             return false
         }
         return true
+    }
+
+
+    private fun countWords(text: String): Int {
+        val words = text.trim().split("\\s+".toRegex())
+        return words.size.coerceAtMost(100) // Enforce the 100-word limit
     }
 
 

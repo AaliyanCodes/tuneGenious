@@ -10,6 +10,11 @@ import com.example.aitonify.databinding.ActivityGeneratedSongBinding
 
 
 class GeneratedSong : AppCompatActivity() ,OnClickListener{
+    override fun onBackPressed() {
+        val dialogFragment = CustomDialogFragment()
+        dialogFragment.show(supportFragmentManager, "My Fragment")
+
+    }
     private lateinit var binding : ActivityGeneratedSongBinding
     private var isAnimationPlaying = true
     private lateinit var animationView: LottieAnimationView
@@ -33,11 +38,11 @@ class GeneratedSong : AppCompatActivity() ,OnClickListener{
                 if (isAnimationPlaying) {
                     animationView.cancelAnimation()
                     isAnimationPlaying = false
-                    binding.materialButton.setImageResource(R.drawable.pauseicon)
+                    binding.materialButton.setImageResource(R.drawable.playicon)
                 } else {
                     animationView.playAnimation()
                     isAnimationPlaying = true
-                    binding.materialButton.setImageResource(R.drawable.playicon)
+                    binding.materialButton.setImageResource(R.drawable.pauseicon)
                 }
             }
             binding.matButton1.id->{
@@ -51,7 +56,7 @@ class GeneratedSong : AppCompatActivity() ,OnClickListener{
     private fun shareFile() {
         val fileUri = Uri.parse("content://path/to/your/file")
         val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "application/*" // Change the MIME type as needed
+        shareIntent.type = "application/*"
         shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         startActivity(Intent.createChooser(shareIntent, "Share via"))
