@@ -44,16 +44,17 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/animationsong" />
+
     <SeekBar
+        android:id="@+id/seekbar"
         android:layout_width="300dp"
         android:layout_height="20dp"
-        android:id="@+id/seekbar"
-        app:layout_constraintTop_toBottomOf="@+id/song_anim"
-        app:layout_constraintStart_toEndOf="@id/material_button"
-        app:layout_constraintEnd_toEndOf="@+id/song_anim"
         android:layout_marginTop="5dp"
+        android:outlineAmbientShadowColor="@color/white"
         android:outlineSpotShadowColor="@color/white"
-        android:outlineAmbientShadowColor="@color/white"/>
+        app:layout_constraintEnd_toEndOf="@+id/song_anim"
+        app:layout_constraintStart_toEndOf="@id/material_button"
+        app:layout_constraintTop_toBottomOf="@+id/song_anim" />
     <ImageView
         android:id="@+id/material_button"
         android:layout_width="30dp"

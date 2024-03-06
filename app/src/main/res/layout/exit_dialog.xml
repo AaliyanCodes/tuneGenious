@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/text_view_dialog2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Do you really want to exit?"
+        android:textSize="18dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/urbanist_500"
+        android:layout_marginTop="@dimen/_20ssp"
+        android:textStyle="bold"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dialog1_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_view_dialog2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dialog1_button2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_22ssp"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/white"
+        app:cornerRadius="10dp"
+        android:textColor="@color/black"
+        android:text="Quit"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dialog1_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_view_dialog2"
+        app:layout_constraintStart_toEndOf="@id/dialog1_button1"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_22ssp"
+        app:cornerRadius="10dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:text="Cancel"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

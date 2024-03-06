@@ -4,7 +4,7 @@
         android:startColor="#37ECBA"
         android:endColor="#75D473" />
     <corners
-        android:radius="@dimen/_14ssp"
+        android:radius="@dimen/_12ssp"
         >
 
     </corners>

@@ -5,30 +5,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
 import android.widget.Button
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 
-
-class CustomDialogFragment : DialogFragment() {
+class CustomDialog: DialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.dialog_discard, container, false)
+        val view = inflater.inflate(R.layout.exit_dialog, container, false)
         dialog?.window?.setBackgroundDrawableResource(R.drawable.rounded_discard_dialog)
 
-        val button1 = view.findViewById<Button>(R.id.dialog_button2)
-        val button = view.findViewById<Button>(R.id.dialog_button1)
+        val button1 = view.findViewById<Button>(R.id.dialog1_button2)
+        val button = view.findViewById<Button>(R.id.dialog1_button1)
         dialog?.setCancelable(false)
 
         button.setOnClickListener {
-            val intent = Intent(activity, Description::class.java)
-            startActivity(intent)
+            val a = Intent(Intent.ACTION_MAIN)
+            a.addCategory(Intent.CATEGORY_HOME)
+            a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(a)
             dismiss()
         }
         button1.setOnClickListener {

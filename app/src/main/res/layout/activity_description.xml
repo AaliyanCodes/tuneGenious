@@ -66,16 +66,15 @@
             android:background="@drawable/bg_edittext"
             app:layout_constraintTop_toBottomOf="@id/imageview">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_14sdp"
+                android:layout_height="@dimen/_14sdp"
                 android:id="@+id/image_view_clear"
-                android:background="@drawable/cancel_dialog"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/editText"
                 app:layout_constraintTop_toTopOf="parent"
                 android:backgroundTint="@color/white"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:layout_marginEnd="@dimen/_10sdp"/>
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_9sdp"/>
 
             <EditText
                 android:id="@+id/editText"
@@ -84,11 +83,11 @@
                 android:hint="Description!"
                 android:textSize="@dimen/_13ssp"
                 android:gravity="left|top"
-                android:textColorHint="#383737"
+                android:textColorHint="#585858"
                 android:textColor="#383737"
                 android:background="@null"
                 android:fontFamily="@font/roboslab"
-                android:layout_margin="16dp"
+                android:layout_margin="23dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 app:layout_constraintTop_toTopOf="parent"
@@ -97,15 +96,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:text="0/500"
                 android:textColor="@color/black"
                 android:background="@drawable/text_counter"
                 android:id="@+id/wordCountTextView"
-                android:layout_marginTop="@dimen/_82sdp"
-                android:layout_marginEnd="@dimen/_3ssp"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:padding="@dimen/_2sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/_4sdp"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

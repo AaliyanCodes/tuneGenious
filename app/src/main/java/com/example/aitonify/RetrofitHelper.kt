@@ -1,29 +1,33 @@
 package com.example.aitonify
 
-import okhttp3.Interceptor
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+
 object RetrofitHelper {
-    private val timeoutInSeconds: Long = 10000
-    private val url = "http://34.71.128.105:5000/"
+//    private val timeoutInSeconds: Long = 10000
+    private val url = "http://localvps.metexlabz.com:5005/"
 
     val client = OkHttpClient.Builder()
-        .connectTimeout(timeoutInSeconds, TimeUnit.SECONDS)
-        .readTimeout(timeoutInSeconds, TimeUnit.SECONDS)
+        .connectTimeout(5, TimeUnit.MINUTES)
+        .readTimeout(5, TimeUnit.MINUTES)
         .addInterceptor(HttpLoggingInterceptor().apply {
-            this.level=HttpLoggingInterceptor.Level.BODY
+            this.level = HttpLoggingInterceptor.Level.BODY
         })
-        .writeTimeout(timeoutInSeconds, TimeUnit.SECONDS)
+
         .build()
 
-    fun getInstance() : Retrofit {
+    fun getInstance(): Retrofit {
+        val gson = GsonBuilder().setLenient().create()
         return Retrofit.Builder()
             .baseUrl(url)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
     }
