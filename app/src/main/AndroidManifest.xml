@@ -22,6 +22,7 @@
         android:theme="@style/Theme.AiTonify"
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
+
         <activity
             android:name=".Exit_activity"
             android:exported="false" />

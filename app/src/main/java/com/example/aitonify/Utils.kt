@@ -54,24 +54,11 @@ object Utils {
                 // create path to store file
                 try {
                     picFile.createNewFile()
-                   /* val picOut = FileOutputStream(picFile)
-
-                    FileOutputStream(picFile).use { output ->
-                        val buffer = ByteArray(4 * 1024) // or other buffer size
-                        var read: Int
-                        while (stream.read(buffer).also { read = it } != -1) {
-                            output.write(buffer, 0, read)
-                        }
-                        output.flush()
-                    }*/
-
                     stream.use { inputStream ->
                         FileOutputStream(picFile).use { outputStream ->
                             inputStream.copyTo(outputStream)
                         }
                     }
-
-//                    picOut.close()
                 } catch (e: Exception) {
                     Log.e("error", "ScreenShotAndShareIt Error catch : " + e.printStackTrace())
                 }

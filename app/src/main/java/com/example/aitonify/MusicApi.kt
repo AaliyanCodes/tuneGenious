@@ -9,7 +9,7 @@ import retrofit2.http.Part
 
 interface MusicApi {
     @Multipart
-    @POST("generate-audio")
+    @POST("generate_audio")
     fun getMusicByPrompt(
         @Part("api_key") api_key: RequestBody,
         @Part("prompt") prompt: RequestBody,

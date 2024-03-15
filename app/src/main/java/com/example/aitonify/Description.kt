@@ -217,7 +217,9 @@ class Description : AppCompatActivity(), OnClickListener {
                     val userPrompt = editTextPrompt.text.toString()
 
                     if (userPrompt.isNotEmpty()) {
-//                            val progressDialog = ProgressDialog.show(this, "", "Loading...", true)
+                        val dialogFragment =loadingFragment()
+                        dialogFragment.show(supportFragmentManager, "My Fragment")
+
 
 
 //                            CoroutineScope(Dispatchers.IO).launch {
@@ -229,28 +231,27 @@ class Description : AppCompatActivity(), OnClickListener {
 
                         val call = musicApi.getMusicByPrompt(
                             key, text
+
+
                         )
 
                         call.enqueue(object : Callback<ResponseBody> {
                             override fun onResponse(
+
                                 call: Call<ResponseBody>,
                                 response: Response<ResponseBody>
                             ) {
+
                                 if (response.isSuccessful) {
+
+
 
 
                                     response.body()?.let { responseBody ->
 
 
 
-
-
-//                                        val filePath = File(getExternalFilesDir(null), "audio.wav").absolutePath
-//                                        val isFileSaved = saveByteArrayAsWavFile(audioBytes, filePath)
-
                                         Log.i("TAG", "onResponse: ${responseBody.byteStream().available()}")
-
-//                                        if(responseBody.bytes().isNotEmpty()) {
 
                                             CoroutineScope(Dispatchers.IO).launch {
 
@@ -271,7 +272,9 @@ class Description : AppCompatActivity(), OnClickListener {
                                                     "TAG", "Successful: Bytes Size:" +
                                                             " stored file " + storedFile?.length()
                                                 )
-                                                // Create an intent to start the GeneratedSong activity
+                                                if (dialogFragment.isAdded) {
+                                                    dialogFragment.dismiss()
+                                                }
                                                 val intent = Intent(this@Description, GeneratedSong::class.java)
 
                                                 // Put the filePath as an extra in the intent
@@ -280,28 +283,14 @@ class Description : AppCompatActivity(), OnClickListener {
                                                 // Start the GeneratedSong activity
                                                 startActivity(intent)
                                             }
-//                                        }
 
-
-//                                        val filePath = File(getExternalFilesDir(null), "generated_audio.wav")
-//                                        val isFileSaved = saveResponseBodyAsFile(responseBody, "generated_audio.wav")
-                                       /* if (isFileSaved) {
-                                            Log.i("TAG", "Successful: Bytes Size: ${audioBytes.size}, WAV file saved at: $filePath")
-                                            // Create an intent to start the GeneratedSong activity
-                                            val intent = Intent(this@Description, GeneratedSong::class.java)
-
-                                            // Put the filePath as an extra in the intent
-                                            intent.putExtra("audioFilePath", filePath)
-
-                                            // Start the GeneratedSong activity
-                                            startActivity(intent)
-                                        } else {
-                                            Log.e("TAG", "Failed to save WAV file")
-                                        }*/
 
                                     }
 
                                 } else {
+                                    if (dialogFragment.isAdded) {
+                                        dialogFragment.dismiss()
+                                    }
                                     Log.i("TAG", "onResponse: ${response.body()}")
                                 }
                             }
@@ -310,6 +299,9 @@ class Description : AppCompatActivity(), OnClickListener {
                                 call: Call<ResponseBody>,
                                 t: Throwable
                             ) {
+                                if (dialogFragment.isAdded) {
+                                    dialogFragment.dismiss()
+                                }
                                 Log.e("TAG", "onFailure: ${t.message}")
                             }
 
@@ -337,131 +329,8 @@ class Description : AppCompatActivity(), OnClickListener {
             binding.imageViewClear.id -> {
                 binding.editText.text.clear()
             }
-
-
-        }
-
-
-    }
-    fun saveResponseBodyAsFile(responseBody: ResponseBody, filename: String): Boolean {
-        return try {
-            // Use internal storage directory for example; adjust if you're using external storage
-            val file = File(getExternalFilesDir(null), filename)
-
-            // Writing the InputStream to a File
-            responseBody.byteStream().use { inputStream ->
-                FileOutputStream(file).use { outputStream ->
-                    inputStream.copyTo(outputStream)
-                }
-            }
-
-            true // Indicate the file was saved successfully
-        } catch (e: IOException) {
-            e.printStackTrace()
-            false // Indicate the file was not saved successfully
         }
     }
-
-    fun saveByteArrayAsWavFile(audioData: ByteArray, filePath: String): Boolean {
-        return try {
-            val sampleRate = 44100 // Example, adjust as necessary
-            val channels = 1 // Mono
-            val byteRate = sampleRate * channels * 16 / 8
-            val dataSize = 36 + audioData.size
-            val totalDataLen = dataSize + 4
-
-            FileOutputStream(filePath).use { fos ->
-                // Write RIFF header
-                fos.write("RIFF".toByteArray())
-                fos.write(intToByteArray(totalDataLen))
-                fos.write("WAVE".toByteArray())
-
-                // Write fmt subchunk
-                fos.write("fmt ".toByteArray())
-                fos.write(intToByteArray(16)) // Subchunk size (16 for PCM)
-                fos.write(shortToByteArray(1)) // Audio format (1 for PCM)
-                fos.write(shortToByteArray(channels.toShort()))
-                fos.write(intToByteArray(sampleRate))
-                fos.write(intToByteArray(byteRate))
-                fos.write(shortToByteArray((channels * 16 / 8).toShort())) // Block align
-                fos.write(shortToByteArray(16)) // Bits per sample
-
-                // Write data subchunk
-                fos.write("data".toByteArray())
-                fos.write(intToByteArray(audioData.size))
-                fos.write(audioData)
-            }
-            true
-        } catch (e: IOException) {
-            e.printStackTrace()
-            false
-        }
-    }
-
-
-
-    fun writeWavHeader(outputStream: FileOutputStream, dataSize: Int) {
-        val sampleRate = 44100
-        val channels = 1
-        val bitsPerSample = 16
-        val byteRate = sampleRate * channels * bitsPerSample / 8
-
-        // Write WAV header
-        outputStream.write("RIFF".toByteArray()) // Chunk ID
-        outputStream.write(intToByteArray(36 + dataSize)) // Chunk Size
-        outputStream.write("WAVE".toByteArray()) // Format
-        outputStream.write("fmt ".toByteArray()) // Subchunk1 ID
-        outputStream.write(intToByteArray(16)) // Subchunk1 Size
-        outputStream.write(shortToByteArray(1)) // Audio Format (1 for PCM)
-//        outputStream.write(shortToByteArray(channels)) // Num Channels
-        outputStream.write(intToByteArray(sampleRate)) // Sample Rate
-        outputStream.write(intToByteArray(byteRate)) // Byte Rate
-        outputStream.write(shortToByteArray((channels * bitsPerSample / 8).toShort())) // Block Align
-        outputStream.write(shortToByteArray(bitsPerSample.toShort())) // Bits Per Sample
-        outputStream.write("data".toByteArray()) // Subchunk2 ID
-        outputStream.write(intToByteArray(dataSize)) // Subchunk2 Size
-    }
-
-    fun intToByteArray(value: Int): ByteArray = byteArrayOf(
-        (value and 0xFF).toByte(),
-        (value shr 8 and 0xFF).toByte(),
-        (value shr 16 and 0xFF).toByte(),
-        (value shr 24 and 0xFF).toByte()
-    )
-
-    fun shortToByteArray(value: Short): ByteArray = byteArrayOf(
-        (value and 0xFF).toByte(),
-        (value.toInt() shr 8 and 0xFF).toByte()
-    )
-
-//    private fun convertToMusic(responseBody: ResponseBody?) {
-//       if(responseBody!= null)
-//       {
-//           val audioData = responseBody.bytes()
-//           playWavDate(audioData)
-//       }
-//    }
-//    private fun playWavDate(audioData:ByteArray)
-//    {
-//        val sampleRate = 44100
-//        val channelConfig = AudioFormat.CHANNEL_OUT_MONO
-//        val audioFormat = AudioFormat.ENCODING_PCM_16BIT
-//        val bufferSize = AudioTrack.getMinBufferSize(sampleRate, channelConfig, audioFormat)
-//
-//        val audioTrack = AudioTrack(
-//            AudioManager.STREAM_MUSIC,
-//            sampleRate,
-//            channelConfig,
-//            audioFormat,
-//            bufferSize,
-//            AudioTrack.MODE_STREAM
-//        )
-//        audioTrack.play()
-//        audioTrack.write(audioData, 0, audioData.size)
-//        audioTrack.stop()
-//        audioTrack.release()
-//    }
-
 
     private fun isOnline(): Boolean {
         val conMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -473,44 +342,12 @@ class Description : AppCompatActivity(), OnClickListener {
         return true
     }
 
-
-    private fun countWords(text: String): Int {
-        val words = text.trim().split("\\s+".toRegex())
-        return words.size.coerceAtMost(100) // Enforce the 100-word limit
-    }
-
     private fun hideKeyboard() {
         val inputMethodManager =
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
     }
-//    private fun handleResponse(audioData: ByteArray) {
-//        try {
-//            saveWavToFile(audioData)
-//
-//             playWavDate(audioData)
-//        } catch (e: IOException) {
-//            Log.e(TAG, "IOException while handling response: ${e.message}")
-//            // Handle IO exception
-//        } catch (e: Exception) {
-//            Log.e(TAG, "Exception while handling response: ${e.message}")
-//            // Handle other exceptions
-//        }
-//    }
-//
-//    private fun saveWavToFile(audioData: ByteArray) {
-//        val root = Environment.getExternalStorageDirectory()
-//        val dir = File(root.absolutePath + "/new_wav_directory")
-//        if (!dir.exists()) {
-//            dir.mkdirs()
-//        }
-//        val file = File(dir, "new_wav_file.wav")
-//
-//        FileOutputStream(file).use { outputStream ->
-//            outputStream.write(audioData)
-//            outputStream.flush()
-//        }
-//    }
+
 
 
 }

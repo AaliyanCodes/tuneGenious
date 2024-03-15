@@ -8,6 +8,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.example.aitonify.databinding.ActivityGeneratedSongBinding
@@ -21,6 +22,14 @@ class GeneratedSong : AppCompatActivity(), View.OnClickListener, SeekBar.OnSeekB
     private var updateBy = 1
     private var isRunning = false
     private var mp: MediaPlayer? = null
+    private var audioFilePath: String? = null
+    override fun onBackPressed() {
+
+        val dialogFragment = CustomDialogFragment()
+        dialogFragment.show(supportFragmentManager, "My Fragment")
+
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,19 +42,21 @@ class GeneratedSong : AppCompatActivity(), View.OnClickListener, SeekBar.OnSeekB
         binding.materialButton.setOnClickListener(this)
         animationView = binding.songAnim
         binding.matButton1.setOnClickListener(this)
+        binding.matButton.setOnClickListener(this)
         val filePath = intent.getStringExtra("audioFilePath")
+        audioFilePath = intent.getStringExtra("audioFilePath")
         if (filePath != null) {
             // Initialize MediaPlayer with the sound file
              mp = MediaPlayer.create(this, Uri.parse(filePath))
+            mp?.setOnCompletionListener {
+                // Song is over, pause the animation and reset UI elements as needed
+                pauseAnimationAndSound()
+            }
 
         }
-//        val filePath = intent.extras?.get("audioFilePath")
-//        val fileUri = Uri.parse(filePath.toString())
-//        // Initialize MediaPlayer with the sound file
-//        mp = MediaPlayer.create(this, fileUri)
+
         totalTime = mp?.duration ?: 0
 
-        // Set up the SeekBar and its listener
         seekBar.setOnSeekBarChangeListener(this)
 
         updateSeekBar()
@@ -67,6 +78,10 @@ class GeneratedSong : AppCompatActivity(), View.OnClickListener, SeekBar.OnSeekB
             }
             binding.matButton1.id -> {
                 shareFile()
+
+            }
+            binding.matButton.id ->{
+                Toast.makeText(this, "File is saved", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -85,7 +100,7 @@ class GeneratedSong : AppCompatActivity(), View.OnClickListener, SeekBar.OnSeekB
         animationView.pauseAnimation()
         isAnimationPlaying = false
         binding.materialButton.setImageResource(R.drawable.playicon) // Change to play icon
-        isRunning = false
+        
     }
 
     private fun updateSeekBar() {
@@ -104,12 +119,14 @@ class GeneratedSong : AppCompatActivity(), View.OnClickListener, SeekBar.OnSeekB
     }
 
     private fun shareFile() {
-        val fileUri = Uri.parse("content:/storage/emulated/0/Android/data/com.example.aitonify/files/audio.wav")
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "application/*"
-        shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        startActivity(Intent.createChooser(shareIntent, "Share via"))
+        if (audioFilePath != null) {
+            val fileUri = Uri.parse(audioFilePath)
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "audio/*" // Correct MIME type for audio files
+            shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            startActivity(Intent.createChooser(shareIntent, "Share via"))
+        }
     }
 
     override fun onDestroy() {

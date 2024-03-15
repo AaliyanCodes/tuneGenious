@@ -27,6 +27,7 @@ class CustomDialogFragment : DialogFragment() {
         dialog?.setCancelable(false)
 
         button.setOnClickListener {
+
             val intent = Intent(activity, Description::class.java)
             startActivity(intent)
             dismiss()
