@@ -16,9 +16,7 @@ import java.io.InputStream
 
 object Utils {
 
-    /**
-     * save media
-     */
+
     @SuppressLint("LogNotTimber")
     suspend fun storeBitmap(
         stream: InputStream,
@@ -46,7 +44,7 @@ object Utils {
                     Log.e("not android 11", "storeBitmap: not android 11 ")
                 }
                 if (!picDir.exists()) {
-                    picDir.mkdir()
+                    picDir.mkdirs()
                 }
 
                 picFile = File(picDir.path.plus("/${fileName.plus(".wav")}"))

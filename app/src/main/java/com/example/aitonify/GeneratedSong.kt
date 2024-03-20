@@ -4,12 +4,15 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import com.airbnb.lottie.BuildConfig
 import com.airbnb.lottie.LottieAnimationView
 import com.example.aitonify.databinding.ActivityGeneratedSongBinding
 
@@ -83,6 +86,7 @@ class GeneratedSong : AppCompatActivity(), View.OnClickListener, SeekBar.OnSeekB
             binding.matButton.id ->{
                 Toast.makeText(this, "File is saved", Toast.LENGTH_SHORT).show()
             }
+
         }
     }
 

@@ -31,6 +31,17 @@
         app:layout_constraintStart_toEndOf="@+id/image1"
         app:layout_constraintTop_toTopOf="@+id/image1"
         app:layout_constraintBottom_toBottomOf="@+id/image1" />
+<!--    <ImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/image2"-->
+<!--        android:layout_marginEnd="@dimen/_15ssp"-->
+<!--        android:layout_marginTop="@dimen/_15ssp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:clickable="true"-->
+<!--        android:src="@drawable/back"/>-->
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/song_anim"
         android:layout_width="0dp"

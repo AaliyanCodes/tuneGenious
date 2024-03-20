@@ -277,10 +277,10 @@ class Description : AppCompatActivity(), OnClickListener {
                                                 }
                                                 val intent = Intent(this@Description, GeneratedSong::class.java)
 
-                                                // Put the filePath as an extra in the intent
+
                                                 intent.putExtra("audioFilePath", storedFile?.absolutePath)
 
-                                                // Start the GeneratedSong activity
+
                                                 startActivity(intent)
                                             }
 
